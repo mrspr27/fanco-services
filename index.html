@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fanco Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+    <script src="https://cdn.counter.dev/script.js"
+        data-id="SITE_ID"
+        data-utcoffset="0"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
-        
+
         :root {
             --squid-red: #e84118;
             --squid-pink: #ff5e8e;
@@ -18,21 +22,21 @@
             --squid-green: #44bd32;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         body {
             background-color: var(--squid-dark);
             color: white;
             overflow-x: hidden;
             line-height: 1.6;
         }
-        
+
         /* انیمیشن ها */
         @keyframes fadeInUp {
             from {
@@ -44,80 +48,160 @@
                 transform: translateY(0);
             }
         }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes colorChange {
-            0% { color: var(--squid-red); }
-            25% { color: var(--squid-pink); }
-            50% { color: var(--squid-blue); }
-            75% { color: var(--squid-green); }
-            100% { color: var(--squid-red); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
+
         @keyframes gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
+
         /* استایل های اصلی */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        /* صفحه اصلی - قابل اسکرول */
+
+        /* نوار آماری بالای صفحه */
+        .stats-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            height: 50px;
+        }
+
+        .stats-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .stat-item i {
+            color: var(--squid-blue);
+            font-size: 1.1rem;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition);
+        }
+
+        .menu-btn:hover {
+            color: var(--squid-blue);
+        }
+
+        /* سایدبار منو */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 300px;
+            height: 100%;
+            background: rgba(25, 25, 25, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(79, 195, 247, 0.2);
+            padding: 30px;
+            z-index: 1001;
+            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            color: var(--squid-blue);
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--squid-red);
+        }
+
+        .sidebar-content h3 {
+            color: var(--squid-pink);
+            margin: 20px 0 10px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-content p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .creator-info {
+            background: rgba(79, 195, 247, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .creator-info p {
+            margin: 8px 0;
+        }
+
+        /* صفحه اصلی */
         .page {
             display: none;
             min-height: 100vh;
+            padding-top: 50px;
         }
-        
+
         .page.active {
             display: block;
             animation: fadeInUp 0.8s ease-out;
         }
-        
+
         .main-page {
             background: linear-gradient(135deg, rgba(13, 13, 13, 0.9) 0%, rgba(47, 54, 64, 0.9) 100%);
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero-section {
-            height: 100vh;
+            height: calc(100vh - 50px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -125,7 +209,7 @@
             text-align: center;
             padding: 20px;
         }
-        
+
         .main-title {
             font-size: 4rem;
             font-weight: 900;
@@ -133,7 +217,7 @@
             position: relative;
             animation: fadeInUp 1.2s ease-out;
         }
-        
+
         .main-title span {
             background: linear-gradient(90deg, var(--squid-red), var(--squid-pink), var(--squid-blue));
             background-size: 300% 300%;
@@ -142,7 +226,7 @@
             color: transparent;
             animation: gradient 5s ease infinite;
         }
-        
+
         .main-subtitle {
             font-size: 1.3rem;
             margin-bottom: 60px;
@@ -151,7 +235,7 @@
             position: relative;
             animation: fadeInUp 1.2s ease-out 0.2s both;
         }
-        
+
         .services-container {
             display: flex;
             justify-content: center;
@@ -161,7 +245,7 @@
             flex-wrap: wrap;
             animation: fadeInUp 1.2s ease-out 0.4s both;
         }
-        
+
         .service-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -175,32 +259,32 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .service-card:hover {
             transform: translateY(-10px);
             border-color: var(--squid-red);
             box-shadow: 0 10px 20px rgba(232, 65, 24, 0.3);
         }
-        
+
         .service-icon {
             font-size: 3rem;
             margin-bottom: 20px;
             color: var(--squid-blue);
         }
-        
+
         .service-title {
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 15px;
             color: white;
         }
-        
+
         .service-desc {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.95rem;
             margin-bottom: 25px;
         }
-        
+
         .service-btn {
             display: inline-block;
             background: linear-gradient(45deg, var(--squid-red), var(--squid-pink));
@@ -214,12 +298,12 @@
             cursor: pointer;
             font-size: 1rem;
         }
-        
+
         .service-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(232, 65, 24, 0.4);
         }
-        
+
         /* بخش کپی متن در صفحه اصلی */
         .copy-section {
             margin: 60px auto;
@@ -231,14 +315,14 @@
             position: relative;
             animation: fadeInUp 1s ease-out;
         }
-        
+
         .copy-title {
             font-size: 1.3rem;
             margin-bottom: 15px;
             color: var(--squid-blue);
             text-align: center;
         }
-        
+
         .copy-text {
             background: rgba(0, 0, 0, 0.3);
             padding: 15px;
@@ -251,7 +335,7 @@
             color: #fff;
             text-align: center;
         }
-        
+
         .copy-btn {
             display: block;
             margin: 0 auto;
@@ -265,16 +349,16 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        
+
         .copy-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
         }
-        
+
         /* دکمه بازگشت */
         .back-btn {
             position: fixed;
-            top: 20px;
+            top: 70px;
             left: 20px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
@@ -290,33 +374,33 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .back-btn:hover {
             background: var(--squid-red);
             transform: scale(1.1);
         }
-        
-        /* صفحه Fanco RP SMP (کد شما) */
+
+        /* صفحه Fanco RP SMP */
         .fanco-page {
             background: #0d0d0d;
             overflow-y: auto;
             min-height: 100vh;
         }
-        
+
         .fanco-content {
             max-width: 800px;
-            margin: 80px auto 20px;
+            margin: 100px auto 20px;
             padding: 20px;
         }
-        
+
         /* هدر Fanco */
         .fanco-header {
             position: fixed;
-            top: 20px;
+            top: 70px;
             right: 20px;
             z-index: 100;
         }
-        
+
         .dots {
             font-size: 34px;
             cursor: pointer;
@@ -324,11 +408,11 @@
             border-radius: 50%;
             transition: 0.3s;
         }
-        
+
         .dots:hover {
             background: rgba(255,255,255,0.1);
         }
-        
+
         .menu-box {
             position: absolute;
             top: 55px;
@@ -342,17 +426,17 @@
             min-width: 160px;
             z-index: 101;
         }
-        
+
         .menu-box.active {
             display: flex;
             animation: fadeIn 0.3s ease;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .menu-box button {
             background: none;
             border: none;
@@ -364,12 +448,12 @@
             transition: 0.3s;
             width: 100%;
         }
-        
+
         .menu-box button:hover {
             background: #0ff;
             color: black;
         }
-        
+
         /* تبلیغ Fanco */
         .ad-text {
             margin-top: 30px;
@@ -379,7 +463,7 @@
             font-weight: bold;
             margin-bottom: 30px;
         }
-        
+
         /* متن Fanco */
         .footer {
             font-size: 30px;
@@ -393,13 +477,13 @@
             text-align: center;
             margin-bottom: 50px;
         }
-        
+
         /* بخش‌های تصویری Fanco */
         .section {
             margin: 50px 0;
             text-align: center;
         }
-        
+
         .section img {
             width: 100%;
             max-width: 300px;
@@ -408,14 +492,14 @@
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,255,255,0.3);
         }
-        
+
         .section p {
             margin-top: 15px;
             font-size: 18px;
             color: #ddd;
             padding: 0 10px;
         }
-        
+
         /* کپی‌رایت Fanco */
         .copyright {
             text-align: center;
@@ -425,39 +509,168 @@
             margin-top: 80px;
             padding-bottom: 20px;
         }
-        
-        /* صفحه Squid Game IR */
-        .squid-page {
-            background: linear-gradient(135deg, #0d0d0d 0%, #2d132c 100%);
+
+        /* صفحه TEAM 1 VS TEAM 2 IN SKY */
+        .team-sky-page {
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%);
             overflow-y: auto;
             min-height: 100vh;
         }
-        
-        .squid-content {
-            max-width: 800px;
-            margin: 80px auto 20px;
+
+        .team-sky-content {
+            max-width: 900px;
+            margin: 100px auto 20px;
             padding: 20px;
         }
-        
-        .squid-header {
+
+        .team-sky-header {
             text-align: center;
             margin-bottom: 50px;
         }
-        
-        .squid-header h1 {
+
+        .team-sky-header h1 {
             font-size: 3rem;
             font-weight: 900;
             margin-bottom: 15px;
-            animation: colorChange 5s infinite;
+            background: linear-gradient(90deg, #ff5e8e, #4fc3f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        
-        .squid-header p {
+
+        .team-sky-header .subtitle {
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.7);
             max-width: 700px;
-            margin: 0 auto;
+            margin: 0 auto 30px;
         }
-        
+
+        .team-sky-header .description {
+            font-size: 1.1rem;
+            color: #ff5e8e;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .content-section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid transparent;
+        }
+
+        .content-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #FFD700;
+        }
+
+        .content-section.yellow h2 {
+            border-left-color: #FFD700;
+        }
+
+        .content-section.green h2 {
+            color: #44bd32;
+            border-left-color: #44bd32;
+        }
+
+        .rank-system {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .rank-item {
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            min-width: 180px;
+            text-align: center;
+            border: 2px solid #FFD700;
+            transition: var(--transition);
+        }
+
+        .rank-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .rank-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .red-text {
+            color: #e84118;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(232, 65, 24, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #e84118;
+            font-size: 1rem;
+        }
+
+        .yellow-text {
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .event-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-item h3 {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .event-item p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .game-info {
+            background: rgba(79, 195, 247, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #4fc3f7;
+        }
+
+        .game-info h3 {
+            color: #4fc3f7;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* فوتر صفحه اصلی */
+        .main-footer {
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
         /* پاپ آپ */
         .popup {
             position: fixed;
@@ -476,11 +689,11 @@
             width: 90%;
             max-width: 400px;
         }
-        
+
         .popup p {
             margin-bottom: 20px;
         }
-        
+
         .popup-close {
             background: #0ff;
             color: #000;
@@ -491,148 +704,161 @@
             font-weight: 600;
             transition: var(--transition);
         }
-        
+
         .popup-close:hover {
             background: #00cccc;
         }
-        
-        /* فوتر صفحه اصلی */
-        .main-footer {
-            background: rgba(0, 0, 0, 0.5);
-            text-align: center;
-            padding: 25px 0;
-            margin-top: 60px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .footer-text {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* استایل‌های اضافی برای Squid Game */
-        .social-option-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            width: 100%;
-        }
-        
-        .social-option-btn:hover {
-            background: rgba(79, 195, 247, 0.2);
-            border-color: var(--squid-blue);
-        }
-        
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid rgba(79, 195, 247, 0.2);
-            border-radius: 50%;
-            border-top-color: var(--squid-blue);
-            animation: spin 1s linear infinite;
-            margin: 0 auto 30px;
-        }
-        
+
         /* ریسپانسیو */
         @media (max-width: 768px) {
             .main-title {
                 font-size: 3rem;
             }
-            
+
             .main-subtitle {
                 font-size: 1.1rem;
                 margin-bottom: 40px;
             }
-            
+
             .services-container {
                 flex-direction: column;
                 align-items: center;
                 gap: 20px;
             }
-            
+
             .service-card {
                 width: 100%;
                 max-width: 350px;
                 padding: 25px 20px;
             }
-            
-            .squid-header h1 {
+
+            .stats-left {
+                gap: 15px;
+            }
+
+            .team-sky-header h1 {
                 font-size: 2.5rem;
             }
-            
+
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .rank-item {
+                min-width: 140px;
+                padding: 15px 20px;
+            }
+
             .section img {
                 max-width: 250px;
                 height: 250px;
             }
-            
+
             .section p {
                 font-size: 16px;
             }
-            
-            .fanco-content, .squid-content {
-                margin-top: 70px;
+
+            .fanco-content, .team-sky-content {
+                margin-top: 90px;
             }
-            
+
             .hero-section {
-                height: 90vh;
+                height: calc(90vh - 50px);
+            }
+
+            .sidebar {
+                width: 250px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .main-title {
                 font-size: 2.5rem;
             }
-            
+
             .main-subtitle {
                 font-size: 1rem;
                 padding: 0 15px;
             }
-            
+
             .service-card {
                 padding: 20px 15px;
             }
-            
+
             .service-title {
                 font-size: 1.4rem;
             }
-            
+
             .copy-section {
                 padding: 20px 15px;
             }
-            
+
             .copy-text {
                 font-size: 0.9rem;
             }
-            
+
             .back-btn {
-                top: 15px;
+                top: 65px;
                 left: 15px;
                 width: 45px;
                 height: 45px;
                 font-size: 1.3rem;
             }
-            
-            .squid-header h1 {
+
+            .team-sky-header h1 {
                 font-size: 2rem;
             }
-            
+
+            .content-section {
+                padding: 20px 15px;
+            }
+
+            .rank-system {
+                gap: 10px;
+            }
+
+            .rank-item {
+                min-width: 120px;
+                padding: 12px 15px;
+            }
+
             .hero-section {
-                height: 85vh;
+                height: calc(85vh - 50px);
             }
         }
     </style>
 </head>
 <body>
+    <!-- نوار آماری بالای صفحه -->
+    <div class="stats-bar">
+        <div class="stats-left">
+            <div class="stat-item">
+                <i class="fas fa-eye"></i>
+                <span id="viewCount">Loading...</span>
+            </div>
+        </div>
+        <button class="menu-btn" onclick="toggleSidebar()">⋮</button>
+    </div>
+
+    <!-- سایدبار منو -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">About</div>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <div class="sidebar-content">
+            <h3>Server Creator</h3>
+            <p>Server creator, map creator, and script creator: <strong>itsspr</strong></p>
+            
+            <div class="creator-info">
+                <p><strong>Telegram:</strong> @itsspr27</p>
+            </div>
+            
+            <h3>About This Site</h3>
+            <p>This website is created for Fanco Services gaming community. All rights reserved.</p>
+        </div>
+    </div>
+
     <!-- صفحه اصلی -->
     <div class="page main-page active" id="mainPage">
         <!-- بخش هیرو -->
@@ -640,7 +866,7 @@
             <div class="container">
                 <h1 class="main-title"><span>Fanco Services</span></h1>
                 <p class="main-subtitle">Premium gaming services and communities for the best gaming experience</p>
-                
+
                 <div class="services-container">
                     <div class="service-card" id="fancoCard">
                         <div class="service-icon">
@@ -650,19 +876,19 @@
                         <p class="service-desc">Join our roleplay server, custom gameplay, and an active community.</p>
                         <button class="service-btn" onclick="openService('fanco')">Enter Server</button>
                     </div>
-                    
-                    <div class="service-card" id="squidCard">
+
+                    <div class="service-card" id="teamSkyCard">
                         <div class="service-icon">
-                            <i class="fas fa-gamepad"></i>
+                            <i class="fas fa-cloud"></i>
                         </div>
-                        <h2 class="service-title">Squid Game IR</h2>
-                        <p class="service-desc">Experience the thrill of Squid Game in a safe, moderated environment with events and competitions.</p>
-                        <button class="service-btn" onclick="openService('squid')">Join Game</button>
+                        <h2 class="service-title">TEAM 1 VS TEAM 2 IN SKY</h2>
+                        <p class="service-desc">War in sky but not a normal war. Experience epic sky battles!</p>
+                        <button class="service-btn" onclick="openService('teamSky')">Join Battle</button>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- بخش کپی متن -->
         <section class="container">
             <div class="copy-section">
@@ -673,20 +899,20 @@
                 </button>
             </div>
         </section>
-        
+
         <footer class="main-footer">
             <div class="container">
                 <p class="footer-text">Fanco Services 2025 | Premium Gaming Experience</p>
             </div>
         </footer>
     </div>
-    
+
     <!-- صفحه Fanco RP SMP -->
     <div class="page fanco-page" id="fancoPage">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-left"></i>
         </button>
-        
+
         <div class="fanco-header">
             <div class="dots" onclick="toggleMenu()">⋮</div>
             <div class="menu-box" id="menuBox">
@@ -702,115 +928,122 @@
                 fanco rp smp
             </div>
 
-            <!-- بخش کپی متن حذف شده -->
-            <!-- <div class="card">(private)amoolac</div>
-            <button class="copy-btn" id="copyBtn" onclick="copyText()">Copy to clipboard</button> -->
-
             <div class="footer">Fanco</div>
 
             <!-- بخش عکس + متن -->
             <div class="section">
-                <img src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۹۲۱_۱۱۱۱۴۶۹۸۸_4r91.jpg" alt="ماشین">
+                <img src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۹۲۱_۱۱۱۱۴۶۹۸۸_4r91.jpg" alt="Car">
                 <p id="txt1">In FancoRP, by dialing one of these numbers 2, 3, 4, 5 you can spawn a car and you will spawn inside it too.</p>
             </div>
 
             <div class="section">
-                <img src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۹۲۱_۱۱۱۱۱۴۹۵۳_n2d4.jpg" alt="گدا">
+                <img src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۹۲۱_۱۱۱۱۱۴۹۵۳_n2d4.jpg" alt="Beggar">
                 <p id="txt2">In FancoRP, you can find food in ruins for the beggar and give it to him, and he will give you money.</p>
             </div>
 
             <div class="section">
-                <img src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۹۲۱_۱۱۱۰۱۰۰۸۶_9c7u.jpg" alt="کیت خراب">
+                <img src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۹۲۱_۱۱۱۰۱۰۰۸۶_9c7u.jpg" alt="Broken Kit">
                 <p id="txt3">You can take a broken kit from behind the shop and bring it here to get a first aid kit, which you can use by dialing 8.</p>
             </div>
 
             <div class="copyright">copyright by parham ghadri 2025</div>
         </div>
     </div>
-    
-    <!-- صفحه Squid Game IR -->
-    <div class="page squid-page" id="squidPage">
+
+    <!-- صفحه TEAM 1 VS TEAM 2 IN SKY -->
+    <div class="page team-sky-page" id="teamSkyPage">
         <button class="back-btn" onclick="goBack()">
             <i class="fas fa-arrow-left"></i>
         </button>
-        
+
         <div class="container">
-            <div class="squid-header">
-                <h1>Squid Game IR</h1>
-                <p>Experience the thrill of Squid Game in a safe, moderated environment. Join events, compete with others, and win prizes.</p>
+            <div class="team-sky-header">
+                <h1>TEAM 1 VS TEAM 2 IN SKY</h1>
+                <p class="subtitle">Experience the ultimate sky battle between two powerful teams</p>
+                <p class="description">war in sky but not a normal war</p>
             </div>
-            
-            <div class="squid-content">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <h3 style="color: var(--squid-red); font-size: 1.8rem; margin-bottom: 20px;">Request Bodyguard</h3>
-                    <p style="margin-bottom: 25px; color: rgba(255,255,255,0.8);">Click the button below to start the bodyguard request process.</p>
-                    <button class="service-btn" style="font-size: 1.1rem; padding: 15px 35px;" onclick="startBodyguardRequest()">
-                        Start Bodyguard Request
-                    </button>
+
+            <div class="team-sky-content">
+                <!-- بخش رنک‌ها -->
+                <div class="content-section yellow">
+                    <h2>RANKS</h2>
+                    <p class="yellow-text">Your rank is determined based on the number of kills you have and you start from noob rank</p>
+                    
+                    <div class="rank-system">
+                        <div class="rank-item">
+                            <div class="rank-name">Noob</div>
+                        </div>
+                        <div class="rank-item">
+                            <div class="rank-name">not very noob</div>
+                        </div>
+                        <div class="rank-item">
+                            <div class="rank-name">not bad</div>
+                        </div>
+                        <div class="rank-item">
+                            <div class="rank-name">it's OK</div>
+                        </div>
+                        <div class="rank-item">
+                            <div class="rank-name">pro</div>
+                        </div>
+                        <div class="rank-item">
+                            <div class="rank-name">God</div>
+                        </div>
+                        <div class="rank-item">
+                            <div class="rank-name">and more..</div>
+                        </div>
+                    </div>
+
+                    <div class="red-text">
+                        Why aren't ranks saved? Because by adding the registration feature to the server, most players cannot join the server
+                    </div>
                 </div>
-                
-                <div id="requestSteps" style="display: none;">
-                    <h4 style="color: var(--squid-blue); margin-bottom: 20px; text-align: center;">Select Your Social Media</h4>
-                    <div style="margin-bottom: 30px;">
-                        <button class="social-option-btn" data-social="rubika" onclick="selectSocial('rubika')">
-                            <i class="fab fa-rocketchat" style="margin-right: 8px;"></i>Rubika
-                        </button>
-                        <button class="social-option-btn" data-social="telegram" onclick="selectSocial('telegram')">
-                            <i class="fab fa-telegram" style="margin-right: 8px;"></i>Telegram
-                        </button>
-                        <button class="social-option-btn" data-social="whatsapp" onclick="selectSocial('whatsapp')">
-                            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i>WhatsApp
-                        </button>
-                        <button class="social-option-btn" data-social="eitaa" onclick="selectSocial('eitaa')">
-                            <i class="fas fa-comment-alt" style="margin-right: 8px;"></i>Eitaa
-                        </button>
+
+                <!-- بخش ایونت‌ها -->
+                <div class="content-section green">
+                    <h2>EVENTS</h2>
+                    <p class="yellow-text">Events happen on certain days like specified kills or completing obbies and in return you get a rank or ability</p>
+                    
+                    <div class="event-item">
+                        <h3>Weekly Kill Challenge</h3>
+                        <p>Get the most kills within a week to win special rewards and temporary God rank</p>
+                        <p>Event runs every Monday to Sunday</p>
                     </div>
                     
-                    <div style="text-align: center;">
-                        <button class="service-btn" id="nextStepBtn" onclick="processRequest()" disabled style="opacity: 0.6;">
-                            Next Step
-                        </button>
+                    <div class="event-item">
+                        <h3>Obby Completion Race</h3>
+                        <p>Be the first to complete all obstacle courses to earn exclusive abilities</p>
+                        <p>Event happens every Friday</p>
+                    </div>
+                    
+                    <div class="event-item">
+                        <h3>Team Battle Tournament</h3>
+                        <p>Join team battles with special rules and win unique rewards</p>
+                        <p>Monthly tournament on the last Saturday</p>
+                    </div>
+
+                    <div class="red-text">
+                        But rank is not saved and is one-time use only
                     </div>
                 </div>
-                
-                <div id="loadingStep" style="display: none; text-align: center; padding: 40px 0;">
-                    <div class="spinner"></div>
-                    <h4 style="color: var(--squid-blue);">Processing your request...</h4>
-                </div>
-                
-                <div id="resultStep" style="display: none; text-align: center; padding: 30px; background: rgba(79, 195, 247, 0.1); border-radius: 15px;">
-                    <h4 style="color: var(--squid-blue); margin-bottom: 20px;">Your request has been submitted!</h4>
-                    <p style="margin-bottom: 25px; font-size: 1.1rem;">
-                        Please send the reason for your bodyguard request to ID 
-                        <span style="background: var(--squid-red); color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold;">@itsspr27</span> 
-                        on 
-                        <span id="selectedSocial" style="background: var(--squid-pink); color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold;">Rubika</span> 
-                        and wait for a response.
-                    </p>
-                    <button class="service-btn" onclick="resetRequest()">
-                        Back to Home
-                    </button>
-                </div>
-                
-                <div style="margin-top: 50px; text-align: center;">
-                    <h4 style="color: var(--squid-pink); margin-bottom: 15px;">Event Information</h4>
-                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
-                        Events are announced in our Rubika channel. Join to stay updated!
-                    </p>
-                    <a href="https://rubika.ir/squidGameirserver" target="_blank" class="service-btn">
-                        <i class="fab fa-rocketchat" style="margin-right: 8px;"></i>Join Rubika Channel
-                    </a>
+
+                <!-- اطلاعات بازی -->
+                <div class="game-info">
+                    <h3>HOW TO PLAY</h3>
+                    <p>You can choose your team when you join the server</p>
+                    <p>Each team has their own base and special abilities</p>
+                    <p>The goal is to defeat all members of the opposing team</p>
+                    <p>Special sky arenas provide unique battle experiences</p>
                 </div>
             </div>
         </div>
-        
+
         <footer class="main-footer">
             <div class="container">
-                <p class="footer-text">Squid Game IR 2025 | Safe Competitive Gaming</p>
+                <p class="footer-text">TEAM 1 VS TEAM 2 IN SKY 2025 | Epic Sky Battles</p>
             </div>
         </footer>
     </div>
-    
+
     <!-- پاپ آپ عمومی -->
     <div class="popup" id="popup">
         <p id="popupText">Copied to clipboard!</p>
@@ -820,54 +1053,50 @@
     <script>
         // متغیرهای گلوبال
         let currentLang = "en";
-        let selectedSocialMedia = '';
-        
+
         // تغییر صفحات
         function openService(service) {
             // مخفی کردن همه صفحات
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
+
             // نمایش صفحه درخواستی
             if (service === 'fanco') {
                 document.getElementById('fancoPage').classList.add('active');
                 // تغییر URL در تاریخچه مرورگر
                 history.pushState({page: 'fanco'}, '', '/fancorpsmp');
-            } else if (service === 'squid') {
-                document.getElementById('squidPage').classList.add('active');
+            } else if (service === 'teamSky') {
+                document.getElementById('teamSkyPage').classList.add('active');
                 // تغییر URL در تاریخچه مرورگر
-                history.pushState({page: 'squid'}, '', '/squidgameir');
+                history.pushState({page: 'teamSky'}, '', '/teamskybattle');
             }
         }
-        
+
         function goBack() {
             // مخفی کردن همه صفحات
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
+
             // نمایش صفحه اصلی
             document.getElementById('mainPage').classList.add('active');
-            
+
             // تغییر URL در تاریخچه مرورگر
             history.pushState({page: 'main'}, '', '/');
-            
-            // بازنشانی فرم Squid Game اگر باز بود
-            resetRequest();
         }
-        
+
         // مدیریت تاریخچه مرورگر
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.page === 'fanco') {
                 openService('fanco');
-            } else if (event.state && event.state.page === 'squid') {
-                openService('squid');
+            } else if (event.state && event.state.page === 'teamSky') {
+                openService('teamSky');
             } else {
                 goBack();
             }
         });
-        
+
         // کپی به کلیپ‌بورد در صفحه اصلی
         function copyToClipboard() {
             const text = "(private)amoolac";
@@ -878,120 +1107,76 @@
                 showMainPopup('Failed to copy text');
             });
         }
-        
+
         // نمایش پاپ آپ اصلی
         function showMainPopup(message) {
             document.getElementById('popupText').textContent = message;
             document.getElementById('popup').style.display = 'block';
         }
-        
+
         function closePopup() {
             document.getElementById('popup').style.display = 'none';
         }
-        
-        // منطق درخواست گارد برای Squid Game
-        function startBodyguardRequest() {
-            document.getElementById('requestSteps').style.display = 'block';
-            document.querySelector('button[onclick="startBodyguardRequest()"]').style.display = 'none';
-        }
-        
-        function selectSocial(social) {
-            selectedSocialMedia = social;
-            
-            // حذف انتخاب قبلی
-            document.querySelectorAll('.social-option-btn').forEach(btn => {
-                btn.style.background = 'rgba(255, 255, 255, 0.1)';
-                btn.style.color = 'white';
-            });
-            
-            // انتخاب گزینه جدید
-            const selectedBtn = document.querySelector(`[data-social="${social}"]`);
-            selectedBtn.style.background = 'linear-gradient(45deg, var(--squid-red), var(--squid-pink))';
-            selectedBtn.style.color = 'white';
-            
-            // فعال کردن دکمه بعدی
-            document.getElementById('nextStepBtn').disabled = false;
-            document.getElementById('nextStepBtn').style.opacity = '1';
-        }
-        
-        function processRequest() {
-            if (!selectedSocialMedia) return;
-            
-            // مخفی کردن مراحل فعلی
-            document.getElementById('requestSteps').style.display = 'none';
-            
-            // نمایش لودینگ
-            document.getElementById('loadingStep').style.display = 'block';
-            
-            // نمایش نام شبکه اجتماعی انتخاب شده
-            const socialNames = {
-                'rubika': 'Rubika',
-                'telegram': 'Telegram',
-                'whatsapp': 'WhatsApp',
-                'eitaa': 'Eitaa'
-            };
-            document.getElementById('selectedSocial').textContent = socialNames[selectedSocialMedia];
-            
-            // شبیه‌سازی پردازش
-            setTimeout(() => {
-                document.getElementById('loadingStep').style.display = 'none';
-                document.getElementById('resultStep').style.display = 'block';
-            }, 2500);
-        }
-        
-        function resetRequest() {
-            // بازنشانی فرم
-            selectedSocialMedia = '';
-            document.getElementById('requestSteps').style.display = 'none';
-            document.getElementById('loadingStep').style.display = 'none';
-            document.getElementById('resultStep').style.display = 'none';
-            
-            const startBtn = document.querySelector('button[onclick="startBodyguardRequest()"]');
-            if (startBtn) {
-                startBtn.style.display = 'block';
-            }
-            
-            // بازنشانی دکمه‌های انتخاب شبکه‌های اجتماعی
-            document.querySelectorAll('.social-option-btn').forEach(btn => {
-                btn.style.background = 'rgba(255, 255, 255, 0.1)';
-                btn.style.color = 'white';
-            });
-            
-            document.getElementById('nextStepBtn').disabled = true;
-            document.getElementById('nextStepBtn').style.opacity = '0.6';
-        }
-        
-        // توابع برای Fanco RP SMP (از کد شما)
+
+        // توابع برای Fanco RP SMP
         function toggleMenu() {
             document.getElementById("menuBox").classList.toggle("active");
         }
-        
+
         function showPopup(type) {
             const popup = document.getElementById("popupBox");
             popup.innerHTML = `<p>${type === "support" ? "Telegram @mrspr27" : "Rubika @amoolac"}</p><button class="popup-close" onclick="closeFancoPopup()">OK</button>`;
             popup.style.display = "block";
         }
-        
+
         function closeFancoPopup() {
             document.getElementById("popupBox").style.display = "none";
         }
-        
+
+        // کنترل سایدبار
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // استفاده از counter.dev برای نمایش بازدیدها
+        // بعد از اینکه سایت ID واقعی را دریافت کرد، SITE_ID را جایگزین کنید
+        // این کد برای نمایش اطلاعات از counter.dev است
+        function setupCounterDev() {
+            // این تابع توسط counter.dev به صورت اتوماتیک فراخوانی می‌شود
+            // برای تست، از داده‌های نمونه استفاده می‌کنیم
+            const viewCount = "";
+            document.getElementById('viewCount').textContent = viewCount + ' welcome';
+            
+            // در واقعیت، counter.dev این داده‌ها را به صورت اتوماتیک وارد می‌کند
+            // برای تست نمایش داده می‌دهیم
+            console.log('Counter.dev script loaded');
+        }
+
         // بستن منو هنگام کلیک بیرون از آن
         document.addEventListener('click', function(event) {
             const menuBox = document.getElementById('menuBox');
             const dots = document.querySelector('.dots');
-            
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.menu-btn');
+
             if (menuBox && menuBox.classList.contains('active') && 
                 !menuBox.contains(event.target) && 
                 !dots.contains(event.target)) {
                 menuBox.classList.remove('active');
             }
+
+            if (sidebar && sidebar.classList.contains('active') && 
+                !sidebar.contains(event.target) && 
+                !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('active');
+            }
         });
-        
-        // مقداردهی اولیه URL
+
+        // مقداردهی اولیه
         window.onload = function() {
             history.replaceState({page: 'main'}, '', '/');
+            setupCounterDev();
         };
     </script>
 </body>
-</html>
+                    </html>
